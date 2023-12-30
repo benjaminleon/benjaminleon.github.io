@@ -48,10 +48,10 @@
 
         // Create a new paragraph element
         var paragraph = document.createElement('p');
-
+    
         // Create a span for the killer's name (clickable)
         var killerSpan = document.createElement('span');
-        killerSpan.innerText = killer;
+        killerSpan.innerText = killer + '🔪';
         killerSpan.style.cursor = 'pointer';
         killerSpan.onclick = function () {
             toggleVictim(victim);
@@ -63,12 +63,9 @@
         victimSpan.innerText = victim;
         victimSpan.classList.add('hidden');
 
-        // Append spans to the paragraph
         paragraph.appendChild(killerSpan);
-        paragraph.appendChild(document.createTextNode(' -> '));
         paragraph.appendChild(victimSpan);
 
-        // Append the paragraph to the output div
         outputDiv.appendChild(paragraph);
 
         // Scroll to the bottom of the div to show the latest reveal
