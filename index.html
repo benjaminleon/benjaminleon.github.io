@@ -8,19 +8,46 @@
         body {
             background-color: #202020;
             color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
         }
 
-        span {
-            cursor: pointer;
-            color: #3498db;
+        #container {
+            max-width: 400px;
+            margin: 0 auto;
         }
-        #namesInput {
+
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
             background-color: #404040;
             color: #ffffff;
             padding: 8px;
             border: 1px solid #707070;
             margin-bottom: 10px;
         }
+
+        button {
+            background-color: #008080;
+            color: #ffffff;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        #output {
+            text-align: left;
+        }
+
+        span {
+            cursor: pointer;
+            color: #3498db;
+        }
+
         .hidden {
             display: none;
         }
@@ -28,11 +55,13 @@
 </head>
 <body>
 
-<textarea id="namesInput" rows="4" cols="20" placeholder="Enter names, one per line"></textarea>
-<button onclick="generate()">Generate</button>
+<div id="container">
+    <textarea id="namesInput" rows="4" placeholder="Enter names, one per line"></textarea>
+    <button onclick="generate()">Generate</button>
 
-<!-- Use a div to display the output on the page -->
-<div id="output"></div>
+    <!-- Use a div to display the output on the page -->
+    <div id="output"></div>
+</div>
 
 <script>
     var pairs;
@@ -48,7 +77,7 @@
 
         // Create a new paragraph element
         var paragraph = document.createElement('p');
-    
+
         // Create a span for the killer's name (clickable)
         var killerSpan = document.createElement('span');
         killerSpan.innerText = killer + '🔪';
@@ -74,8 +103,6 @@
 
     function toggleVictim(victim) {
         var victimSpan = document.getElementById(victim);
-        // var currentDisplay = window.getComputedStyle(victimSpan).getPropertyValue('display');
-        // victimSpan.style.display = (currentDisplay === 'none') ? 'inline' : 'none';
         victimSpan.classList.toggle('hidden');
     }
 
