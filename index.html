@@ -3,11 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Pairing</title>
+    <title>Game generator</title>
+    <style>
+        body {
+            background-color: #202020;
+            color: #ffffff;
+        }
+
+        span {
+            cursor: pointer;
+            color: #3498db;
+        }
+        #namesInput {
+            background-color: #404040;
+            color: #ffffff;
+            padding: 8px;
+            border: 1px solid #707070;
+            margin-bottom: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
-<textarea id="namesInput" rows="4" cols="50" placeholder="Enter names, one per line"></textarea>
+<textarea id="namesInput" rows="4" cols="20" placeholder="Enter names, one per line"></textarea>
 <button onclick="generate()">Generate</button>
 
 <!-- Use a div to display the output on the page -->
@@ -15,7 +36,7 @@
 
 <script>
     var pairs;
-    var revealing = true;
+    var generated = false;
 
     function getRandomIndex(arr) {
         return Math.floor(Math.random() * arr.length);
@@ -38,9 +59,9 @@
 
         // Create a span for the victim's name (initially hidden)
         var victimSpan = document.createElement('span');
-        victimSpan.id = victim
+        victimSpan.id = victim;
         victimSpan.innerText = victim;
-        victimSpan.style.display = 'none';
+        victimSpan.classList.add('hidden');
 
         // Append spans to the paragraph
         paragraph.appendChild(killerSpan);
@@ -56,11 +77,17 @@
 
     function toggleVictim(victim) {
         var victimSpan = document.getElementById(victim);
-        var currentDisplay = window.getComputedStyle(victimSpan).getPropertyValue('display');
-        victimSpan.style.display = (currentDisplay === 'none') ? 'inline' : 'none';
+        // var currentDisplay = window.getComputedStyle(victimSpan).getPropertyValue('display');
+        // victimSpan.style.display = (currentDisplay === 'none') ? 'inline' : 'none';
+        victimSpan.classList.toggle('hidden');
     }
 
     function generate() {
+        if (generated) {
+            return
+        }
+        generated = true
+
         var namesInput = document.getElementById('namesInput');
         var names = namesInput.value.trim().split('\n');
 
