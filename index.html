@@ -3,25 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toggle Names</title>
+    <title>Random Pairing</title>
 </head>
 <body>
 
+<textarea id="namesInput" rows="4" cols="50" placeholder="Enter names, one per line"></textarea>
+<button onclick="generate()">Generate</button>
+
 <!-- Use a div to display the output on the page -->
-<div id="output">
-    <p><span onclick="toggleVisibility('name2')">name1</span> -> <span id="name2" style="display:none;">name2</span></p>
-    <p><span onclick="toggleVisibility('name4')">name3</span> -> <span id="name4" style="display:none;">name4</span></p>
-</div>
+<div id="output"></div>
 
 <script>
-    function toggleVisibility(name) {
-        // Get the corresponding span element by ID
-        var spanElement = document.getElementById(name);
+    var pairs;
+    var revealing = true;
 
-        // Toggle the visibility of the span
-        if (spanElement) {
-            var currentDisplay = window.getComputedStyle(spanElement).getPropertyValue('display');
-            spanElement.style.display = (currentDisplay === 'none') ? 'inline' : 'none';
+    function getRandomIndex(arr) {
+        return Math.floor(Math.random() * arr.length);
+    }
+
+    function revealPair(killer, victim) {
+        // Get the output div
+        var outputDiv = document.getElementById('output');
+
+        // Create a new paragraph element
+        var paragraph = document.createElement('p');
+
+        // Create a span for the killer's name (clickable)
+        var killerSpan = document.createElement('span');
+        killerSpan.innerText = killer;
+        killerSpan.style.cursor = 'pointer';
+        killerSpan.onclick = function () {
+            toggleVictim(victim);
+        };
+
+        // Create a span for the victim's name (initially hidden)
+        var victimSpan = document.createElement('span');
+        victimSpan.id = victim
+        victimSpan.innerText = victim;
+        victimSpan.style.display = 'none';
+
+        // Append spans to the paragraph
+        paragraph.appendChild(killerSpan);
+        paragraph.appendChild(document.createTextNode(' -> '));
+        paragraph.appendChild(victimSpan);
+
+        // Append the paragraph to the output div
+        outputDiv.appendChild(paragraph);
+
+        // Scroll to the bottom of the div to show the latest reveal
+        outputDiv.scrollTop = outputDiv.scrollHeight;
+    }
+
+    function toggleVictim(victim) {
+        var victimSpan = document.getElementById(victim);
+        var currentDisplay = window.getComputedStyle(victimSpan).getPropertyValue('display');
+        victimSpan.style.display = (currentDisplay === 'none') ? 'inline' : 'none';
+    }
+
+    function generate() {
+        var namesInput = document.getElementById('namesInput');
+        var names = namesInput.value.trim().split('\n');
+
+        // Shuffle names array
+        for (var i = names.length - 1; i > 0; i--) {
+            var j = getRandomIndex(names);
+            [names[i], names[j]] = [names[j], names[i]];
+        }
+
+        // Pair each person with the person next to them in the shuffled list
+        pairs = names.map((value, index) => [value, names[(index + 1) % names.length]]);
+
+        // Shuffle pairs array
+        for (var i = pairs.length - 1; i > 0; i--) {
+            var j = getRandomIndex(pairs);
+            [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
+        }
+
+        // Reveal all pairs
+        for (var [killer, victim] of pairs) {
+            revealPair(killer, victim);
         }
     }
 </script>
