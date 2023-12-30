@@ -1,12 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Benji</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle Names</title>
 </head>
 <body>
 
-<!-- <h1>This is a Heading</h1>
-<p>This is a paragraph.</p> -->
+<!-- Use a div to display the output on the page -->
+<div id="output">
+    <p><span onclick="toggleVisibility('name2')">name1</span> -> <span id="name2" style="display:none;">name2</span></p>
+    <p><span onclick="toggleVisibility('name4')">name3</span> -> <span id="name4" style="display:none;">name4</span></p>
+</div>
+
+<script>
+    function toggleVisibility(name) {
+        // Get the corresponding span element by ID
+        var spanElement = document.getElementById(name);
+
+        // Toggle the visibility of the span
+        if (spanElement) {
+            var currentDisplay = window.getComputedStyle(spanElement).getPropertyValue('display');
+            spanElement.style.display = (currentDisplay === 'none') ? 'inline' : 'none';
+        }
+    }
+</script>
 
 </body>
 </html>
