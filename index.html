@@ -92,6 +92,9 @@
         victimSpan.id = victim;
         victimSpan.innerText = victim;
         victimSpan.classList.add('hidden');
+        victimSpan.onclick = function () {
+            toggleVictim(victim);
+        }
 
         paragraph.appendChild(killerSpan);
         paragraph.appendChild(victimSpan);
