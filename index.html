@@ -52,6 +52,10 @@
             color: #3498db;
         }
 
+        .shown {
+            display: inline;
+        }
+
         .hidden {
             display: none;
         }
@@ -60,9 +64,10 @@
 <body>
 
 <div id="container">
-    <textarea id="namesInput" rows="4" placeholder="Enter names, one per line"></textarea>
-    <button onclick="generate()">Generate</button>
+    <textarea id="namesInput" class="shown" rows="4" placeholder="Enter names, one per line"></textarea>
+    <button onclick="generate()" id="generateButton">Generate</button>
 
+    <div id="help" class="hidden">Press your name to reveal your victim. Don't let anyone else see.</div>
     <!-- Use a div to display the output on the page -->
     <div id="output"></div>
 </div>
@@ -121,6 +126,9 @@
 
         var namesInput = document.getElementById('namesInput');
         var names = namesInput.value.trim().split('\n');
+        namesInput.style.display = 'none';
+        var generateButton = document.getElementById('generateButton');
+        
 
         // Shuffle names array
         for (var i = names.length - 1; i > 0; i--) {
@@ -141,6 +149,15 @@
         for (var [killer, victim] of pairs) {
             revealPair(killer, victim);
         }
+
+        var victimSpan = document.getElementById("help");
+        victimSpan.classList.toggle('hidden');
+
+        generateButton.style.display = 'none';
+
+
+
+        
     }
 </script>
 
