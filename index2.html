@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0">
+    <title>Game generator</title>
+    <style>
+        body {
+            background-color: #202020;
+            color: #ffffff;
+            font-family: 'Arial', sans-serif;
+            font-size: 25px;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        #container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background-color: #404040;
+            color: #ffffff;
+            padding: 8px;
+            border: 1px solid #707070;
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #008080;
+            color: #ffffff;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            font-size: 25px;
+            width: 50%;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        #output {
+            text-align: left;
+        }
+
+        span {
+            cursor: pointer;
+            color: #3498db;
+        }
+
+        .shown {
+            display: inline;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div id="container">
+    <textarea id="namesInput" class="shown" rows="4" placeholder="Enter names, one per line"></textarea>
+    <button onclick="generate()" id="generateButton">Generate</button>
+
+    <div id="help" class="hidden">Press your name to reveal your victim. Don't let anyone else see.</div>
+    <!-- Use a div to display the output on the page -->
+    <div id="output"></div>
+</div>
+
+<script>
+    var pairs;
+    var generated = false;
+
+    function getRandomIndex(arr) {
+        return Math.floor(Math.random() * arr.length);
+    }
+
+    function revealPair(killer, victim) {
+        // Get the output div
+        var outputDiv = document.getElementById('output');
+
+        // Create a new paragraph element
+        var paragraph = document.createElement('p');
+
+        // Create a span for the killer's name (clickable)
+        var killerSpan = document.createElement('span');
+        killerSpan.innerText = killer + '🔪';
+        killerSpan.style.cursor = 'pointer';
+        killerSpan.onclick = function () {
+            toggleVictim(victim);
+        };
+
+        // Create a span for the victim's name (initially hidden)
+        var victimSpan = document.createElement('span');
+        victimSpan.id = victim;
+        victimSpan.innerText = victim;
+        victimSpan.classList.add('hidden');
+        victimSpan.onclick = function () {
+            toggleVictim(victim);
+        }
+
+        paragraph.appendChild(killerSpan);
+        paragraph.appendChild(victimSpan);
+
+        outputDiv.appendChild(paragraph);
+
+        // Scroll to the bottom of the div to show the latest reveal
+        outputDiv.scrollTop = outputDiv.scrollHeight;
+    }
+
+    function toggleVictim(victim) {
+        var victimSpan = document.getElementById(victim);
+        victimSpan.classList.toggle('hidden');
+    }
+
+    function generate() {
+        if (generated) {
+            return
+        }
+        generated = true
+
+        var namesInput = document.getElementById('namesInput');
+        var names = namesInput.value.trim().split('\n');
+        namesInput.style.display = 'none';
+        var generateButton = document.getElementById('generateButton');
+        
+
+        // Shuffle names array
+        for (var i = names.length - 1; i > 0; i--) {
+            var j = getRandomIndex(names);
+            [names[i], names[j]] = [names[j], names[i]];
+        }
+
+        // Pair each person with the person next to them in the shuffled list
+        pairs = names.map((value, index) => [value, names[(index + 1) % names.length]]);
+
+        // Shuffle pairs array
+        for (var i = pairs.length - 1; i > 0; i--) {
+            var j = getRandomIndex(pairs);
+            [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
+        }
+
+        // Reveal all pairs
+        for (var [killer, victim] of pairs) {
+            revealPair(killer, victim);
+        }
+
+        var victimSpan = document.getElementById("help");
+        victimSpan.classList.toggle('hidden');
+
+        generateButton.style.display = 'none';
+
+
+
+        
+    }
+</script>
+
+</body>
+</html>
