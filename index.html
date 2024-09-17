@@ -3,20 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenAI API Call Example</title>
+    <title>BRF Åsens chatbot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
-<body>
-    <h1>BRF Åsens chatbot</h1>
-    <h3>Det här är en chatbot som använder sig av föreningens stadgar för att svara på dina frågor.</h3>
-    <p>
-    <h3>Inga frågor eller svar sparas.</h3>
-    <textarea id="question" rows="4" cols="50">Ställ din fråga här</textarea>
-    <br>
-    <textarea id="passcode" rows="1" cols="50">Fyll i lösenordet här</textarea>
-    <br>
-    <button onclick="callOpenAI()">Skicka</button>
-    <p id="result"></p>
+<body class="bg-gray-900 min-h-screen flex flex-col items-center justify-center p-4 text-gray-200">
+    <div class="max-w-2xl w-full bg-gray-800 rounded-lg shadow-lg p-6">
+        <h1 class="text-3xl font-semibold text-gray-100 mb-4">BRF Åsens chatbot</h1>
+        <h3 class="text-lg text-gray-300 mb-4">Det här är en chatbot som använder sig av föreningens stadgar för att svara på dina frågor.</h3>
+        <h3 class="text-lg font-medium text-gray-200 mb-4">Inga frågor eller svar sparas.</h3>
+        <textarea id="question" rows="4" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200" placeholder="Ställ din fråga här"></textarea>
+        <input type="password" id="passcode" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200" placeholder="Fyll i lösenordet här">
+        <button onclick="callOpenAI()" class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+        </button>
+        <div id="result" class="mt-6 p-4 bg-gray-700 rounded-md text-gray-200"></div>
+    </div>
 
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
     <script>
 
@@ -502,7 +513,7 @@ const mapping1 = {
     'S':'x',
     'T':'z',
     'U':'b',
-    'V':'n',
+    'V':'3',
     'b':'B',
     'c':'F',
     'a':'V',
@@ -520,7 +531,7 @@ const mapping1 = {
     'p':'5',
     'q':'6',
     'u':'7',
-    'v':'s',
+    'v':'3',
     'w':'x',
     'e':'g',
     'r':'o',
@@ -608,6 +619,7 @@ async function callOpenAI() {
     for (let i = 12; i < 14 && i < passcode.length; i++) {
         decipheredPasscode += mapping3[passcode[i]]
     }
+    
     let apiKeyPart = 'sk-proj-YYi3T5tCwS4aoKXZ7VY3T3BlbkFJyyj78S'
     let apiKey = apiKeyPart + decipheredPasscode
     console.log("api key", apiKey)
