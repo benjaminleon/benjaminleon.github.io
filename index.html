@@ -18,12 +18,16 @@
         <h3 class="text-lg text-gray-300 mb-4">Det här är en chatbot som använder sig av föreningens stadgar för att svara på dina frågor.</h3>
         <h3 class="text-lg font-medium text-gray-200 mb-4">Inga frågor eller svar sparas.</h3>
         <textarea id="question" rows="4" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200" placeholder="Ställ din fråga här"></textarea>
-        <input type="password" id="passcode" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200" placeholder="Fyll i lösenordet här">
-        <button onclick="callOpenAI()" class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-            </svg>
-        </button>
+        
+        <div class="flex space-x-2">
+
+            <input type="text" id="passcode" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200" placeholder="Fyll i lösenordet här">
+            <button onclick="callOpenAI()" class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                </svg>
+            </button>
+        </div>
         <div id="result" class="mt-6 p-4 bg-gray-700 rounded-md text-gray-200"></div>
     </div>
 
