@@ -20,9 +20,13 @@
         <textarea id="question" rows="4" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200" placeholder="Ställ din fråga här"></textarea>
         
         <div class="flex space-x-2">
-
             <input type="text" id="passcode" class="w-full p-3 bg-gray-700 border border-gray-600 rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-200" placeholder="Fyll i lösenordet här">
-            <button onclick="callOpenAI()" class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800">
+            <button onclick="callOpenAI()" class="bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800" style="aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            width: 3rem; /* Equivalent to w-12 */">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
                 </svg>
