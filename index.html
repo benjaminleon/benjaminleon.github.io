@@ -31,7 +31,7 @@
                 </svg>
             </button>
         </div>
-        <div id="result" class="mt-6 p-4 bg-gray-700 rounded-md text-gray-200"></div>
+        <div id="result" hidden class="mt-6 p-4 bg-gray-700 rounded-md text-gray-200"></div>
     </div>
 
     
@@ -629,7 +629,6 @@ async function callOpenAI() {
     
     let apiKeyPart = 'sk-proj-YYi3T5tCwS4aoKXZ7VY3T3BlbkFJyyj78S'
     let apiKey = apiKeyPart + decipheredPasscode
-    console.log("api key", apiKey)
 
     try {
         // Vectorize the question
@@ -692,6 +691,7 @@ async function callOpenAI() {
             document.getElementById('result').innerText = 'Använde du rätt lösenord?';
         }   
     }
+    document.getElementById('result').hidden = false;
 }
     </script>
 </body>
