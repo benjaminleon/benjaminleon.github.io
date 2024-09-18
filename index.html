@@ -32,6 +32,7 @@
             </button>
         </div>
         <div id="result" hidden class="mt-6 p-4 bg-gray-700 rounded-md text-gray-200"></div>
+        <div id="toggle_explain" onclick="explain()" style="text-align:center; font-size:small; cursor:pointer" class="text-gray-300 underline">Hur funkar det?</div>
         <div id="explanation" hidden class="mt-6 p-4 bg-gray-700 rounded-md text-gray-200">
             Så här funkar det:
             <br>
@@ -46,10 +47,13 @@
             <br>
             <br>
             Frågan som du matar in blir först omvandlad till en punkt och sedan jämförd med paragrafernas punkter. De 5 paragrafer som har sina punkter närmast fråge-punkten i koordinatsystemet skickas tillsammans med frågan till chatGPT.
+            <br>
+            <br>
+            Den här typen av program kallas populärt för RAG (Retrieval-Augmented Generation)
         </div>
         
     </div>
-    <div onclick="explain()" style="font-size:small; cursor:pointer" class="text-gray-300 underline">Hur det funkar</div>
+    
     
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
@@ -615,8 +619,17 @@ const mapping3 = {
     'u':'J',
 }
 
-async function explain() {   
-    document.getElementById('explanation').hidden = ! document.getElementById('explanation').hidden
+async function explain() {
+    let toggledHidden = !document.getElementById('explanation').hidden
+    document.getElementById('explanation').hidden = toggledHidden
+    
+    let text = ''
+    if (toggledHidden) {
+        text = "Hur funkar det?"
+    } else {
+        text = "Göm förklaring"
+    }
+    document.getElementById('toggle_explain').innerText = text
 }
 
 
