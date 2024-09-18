@@ -40,13 +40,12 @@
             Den här sidan använder sig av två tjänster som openAI tillgodoser: 1) vector embedding, och 2) chatGPT
             <br>
             <br>
-            Alla paragrafer i 
-            <a href="https://www.hsb.se/contentassets/e8c3ae46db8b433a8227acdb89db3c5a/stadgar_brf_asen_2023.pdf" target="_blank" style="color: #0000aa">föreningens stadgar</a>
-            har i förväg separerats och tilldelats varsin punkt i ett koordinatsystem. Punkterna representeras så här: [0.02, -0.10, ...]
-            <br>Finessen med detta är att punkter som ligger nära varandra i koordinatsystemet har liknande betydelse. Omvandlar man exempelvis  "apa", "hund", och "katt", kommer deras punkter ligga närmre varandra än "bil", "buss", eller "cykel". Detsamma gäller för längre meningar och ... föreningsstadgar!
+            Alla paragrafer i <a href="https://www.hsb.se/contentassets/e8c3ae46db8b433a8227acdb89db3c5a/stadgar_brf_asen_2023.pdf" target="_blank" style="color: #3090ff">föreningens stadgar</a>
+            har i förväg separerats och tilldelats varsin punkt i ett koordinatsystem, en process som kallas <a href="https://openai.com/index/introducing-text-and-code-embeddings/" target="_blank" style="color: #3090ff">vector embedding</a>.
+            <br>Finessen med detta är att punkter som ligger nära varandra i koordinatsystemet har liknande betydelse. Gör man detta med exempelvis  "apa", "hund", och "katt", kommer deras punkter ligga närmre varandra än "bil", "buss", eller "cykel". Detsamma gäller för längre meningar och ... föreningsstadgar!
             <br>
             <br>
-            Frågan som du matar in blir först omvandlad till en punkt och sedan jämförd med paragrafernas punkter. De 5 paragrafer som har sina punkter närmast fråge-punkten i koordinatsystemet skickas tillsammans med frågan till chatGPT.
+            När du skickar in en fråga blir den omvandlad till en punkt och sedan jämförd med paragrafernas punkter. De 5 paragrafer som har sina punkter närmast fråge-punkten i koordinatsystemet skickas tillsammans med frågan till chatGPT.
             <br>
             <br>
             Den här typen av program kallas populärt för RAG (Retrieval-Augmented Generation)
