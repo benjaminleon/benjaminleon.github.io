@@ -11,6 +11,20 @@
             font-family: 'Inter', sans-serif;
         }
     </style>
+    <style>
+        .cursor {
+            display: inline-block;
+            animation: blink 0.7s infinite;
+            width: 10px;
+            height: 24px;
+            background-color: #888;
+        }
+        @keyframes blink {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
 </head>
 <body class="bg-gray-900 min-h-screen flex flex-col items-center justify-center p-4">
     <div class="max-w-2xl w-full bg-gray-800 rounded-lg shadow-lg p-6">
@@ -631,25 +645,39 @@ async function explain() {
     document.getElementById('toggle_explain').innerText = text
 }
 
+let waiting = false;
+
+let lastQuestion = "";
+let question = "";
+
 
 async function callOpenAI() {
     const question = document.getElementById('question').value;
-    const passcode = document.getElementById('passcode').value;
-    if (question == 'Ställ din fråga här') {
-        document.getElementById('question').style.color = "#AA0000"
-        sleep(200).then(() => {
-            document.getElementById('question').style.color = "#000000"
-        });
+    if (question == lastQuestion) {
+        console.log("same question asked twice, ignore submitting again:", question)
         return;
     }
-    if (passcode == 'Fyll i lösenordet här') {
-        document.getElementById('passcode').style.color = "#AA0000"
-        sleep(200).then(() => {
-            document.getElementById('passcode').style.color = "#000000"
-        });
-        return;
-    }
+    lastQuestion = question;
     
+    // clear previous answer or error message
+    document.getElementById('result').innerText = ""
+
+    if (waiting) {
+        console.log("Already waiting for result, don't submit again")
+        return;
+    }
+    waiting = true
+
+    // Add a blinking cursor to indicate that the website is thinking
+    const container = document.getElementById('result');
+    const cursor = document.createElement('span');
+    cursor.id = 'cursor';
+    cursor.className = 'cursor';
+    container.appendChild(cursor);
+    document.getElementById('result').hidden = false;
+
+    const passcode = document.getElementById('passcode').value;
+
     let decipheredPasscode = ''
     for (let i = 0; i < 9 && i < passcode.length; i++) {
         decipheredPasscode += mapping1[passcode[i]]
@@ -706,7 +734,7 @@ async function callOpenAI() {
 
         // Ask chatGPT
         response = await axios.post('https://api.openai.com/v1/chat/completions', {
-            model: "gpt-4o",
+            model: "gpt-4o-mini",
             messages: [
                 {role: "system", content: instructions},
                 {role: "user", content: question}
@@ -718,14 +746,16 @@ async function callOpenAI() {
             }
         });
 
+        container.removeChild(cursor);
         document.getElementById('result').innerText = response.data.choices[0].message.content;
     } catch (error) {
         console.error('Error:', error);
         if (error.response.status == 401) {
+            container.removeChild(cursor);
             document.getElementById('result').innerText = 'Använde du rätt lösenord?';
-        }   
+        }
     }
-    document.getElementById('result').hidden = false;
+    waiting = false;
 }
     </script>
 </body>
