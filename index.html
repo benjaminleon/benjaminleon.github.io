@@ -726,16 +726,29 @@ async function callOpenAI() {
         // Sort indexes based on dot products in descending order
         let sorted_indexes = indexes.sort((a, b) => dotProducts[b] - dotProducts[a]);
 
-        console.log("dot products", dotProducts)
+        console.log("dot products", dotProducts);
         console.log("sorted indexes", sorted_indexes);
 
         let instructions = "You're an assistant knowledgeable about the housing rules below."
-        + "Don't use markdown format.\n"
-        for (let i = 0; i < 5 && i < sorted_indexes.length; i++) {
+        + "Don't use markdown format. Refer to relevant rules when answering.\n"
+        
+        // take the 5 most relevant bylaws, but cut off if the similarity between the bylaw and the question is too low
+        let relevantBylaws = ""
+        for (let i = 0; i < 5; i++) {
             let idx = sorted_indexes[i];
-            instructions += `${by_laws[idx]}\n\n`;
+            if (dotProducts[idx] < 0.3) {
+                console.log("stopping to add paragraphs here since they aren't sufficiently similar to the question. This one didn't cut it", by_laws[idx]);
+                break;
+            }
+            relevantBylaws += `${by_laws[idx]}\n\n`;
+        }
+        if (relevantBylaws == "") {
+            container.removeChild(cursor);
+            document.getElementById('result').innerText = 'Inga relevanta stadgar för denna fråga hittades';
+            return;
         }
 
+        instructions += relevantBylaws
         console.log(instructions + '\n' + question);
 
         // Ask chatGPT
