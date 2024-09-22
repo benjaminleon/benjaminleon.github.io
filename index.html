@@ -653,16 +653,17 @@ async function explain() {
 let waiting = false;
 
 let lastQuestion = "";
-let question = "";
-
+let lastPasscode = "";
 
 async function callOpenAI() {
     const question = document.getElementById('question').value;
-    if (question == lastQuestion) {
+    const passcode = document.getElementById('passcode').value;
+    if ((question == lastQuestion) && (passcode == lastPasscode)) {
         console.log("same question asked twice, ignore submitting again:", question)
         return;
     }
     lastQuestion = question;
+    lastPasscode = passcode;
     
     // clear previous answer or error message
     document.getElementById('result').innerText = ""
@@ -681,7 +682,7 @@ async function callOpenAI() {
     container.appendChild(cursor);
     document.getElementById('result').hidden = false;
 
-    const passcode = document.getElementById('passcode').value;
+    
 
     let decipheredPasscode = ''
     for (let i = 0; i < 9 && i < passcode.length; i++) {
