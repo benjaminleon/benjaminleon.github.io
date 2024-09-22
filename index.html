@@ -746,6 +746,7 @@ async function callOpenAI() {
         if (relevantBylaws == "") {
             container.removeChild(cursor);
             document.getElementById('result').innerText = 'Inga relevanta stadgar för denna fråga hittades';
+            waiting = false;
             return;
         }
 
