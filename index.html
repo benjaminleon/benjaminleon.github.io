@@ -731,13 +731,13 @@ async function callOpenAI() {
         console.log("sorted indexes", sorted_indexes);
 
         let instructions = "You're an assistant knowledgeable about the housing rules below."
-        + "Don't use markdown format. Refer to relevant rules when answering. If no rules apply to the answer, state that and don't elaborate.Don't mention that these rules were provided:\n"
+        + "Don't use markdown format. Refer to relevant rules when answering. Don't mention that these rules were provided:\n"
         
         // take the 5 most relevant bylaws, but cut off if the similarity between the bylaw and the question is too low
         let relevantBylaws = ""
         for (let i = 0; i < 5; i++) {
             let idx = sorted_indexes[i];
-            if (dotProducts[idx] < 0.3) {
+            if (dotProducts[idx] < 0.7) {
                 console.log("stopping to add paragraphs here since they aren't sufficiently similar to the question. This one didn't cut it", by_laws[idx]);
                 break;
             }
@@ -773,7 +773,7 @@ async function callOpenAI() {
         console.error('Error:', error);
         if (error.response.status == 401) {
             container.removeChild(cursor);
-            document.getElementById('result').innerText = 'Använde du rätt lösenord?';
+            document.getElementById('result').innerText = 'Använde du rätt lösenord? I så fall är pengarna slut på kontot';
         }
     }
     waiting = false;
